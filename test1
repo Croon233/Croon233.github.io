@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>A1</title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+</head>
+<body>
+    <svg width="400" height="200">
+        
+        <rect width="100%" height="100%" fill="black"></rect>
+        
+        
+        <rect x="0" y="145" width="100%" height="40" fill="white"></rect>
+
+        
+        <rect x="50" y="100" width="200" height="40" fill="blue"></rect>
+
+        
+        <circle cx="100" cy="140" r="30" fill="lightgray"></circle>
+        <circle cx="200" cy="140" r="30" fill="lightgray"></circle>
+
+        
+        <polygon points="130,105 170,105 180,125 120,125" fill="white"></polygon>
+
+        
+        <line x1="130" y1="105" x2="170" y2="105" stroke="black" stroke-width="2"></line>
+
+        
+        <circle id="moon" cx="250" cy="30" r="15" fill="yellow" cursor="pointer"></circle>
+    </svg>
+
+    <script>
+        // 
+        const svg = d3.select("svg");
+
+        // getthe moon
+        const moon = d3.select("#moon");
+
+        // initial position
+        let offsetX = 0;
+        let offsetY = 0;
+
+        // mouse
+        moon.on("mousedown", function (event) {
+            offsetX = event.clientX - parseFloat(moon.attr("cx"));
+            offsetY = event.clientY - parseFloat(moon.attr("cy"));
+
+            // mouse mobve
+            svg.on("mousemove", function (event) {
+                const newX = event.clientX - offsetX;
+                const newY = event.clientY - offsetY;
+
+                // new position of moon
+                moon.attr("cx", newX);
+                moon.attr("cy", newY);
+            });
+
+            // mouse release
+            svg.on("mouseup", function () {
+                svg.on("mousemove", null);
+                svg.on("mouseup", null);
+            });
+        });
+    </script>
+</body>
+</html>
